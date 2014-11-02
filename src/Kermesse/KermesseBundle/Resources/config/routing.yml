@@ -1,0 +1,11 @@
+kermesse_sales:
+    resource: "@KermesseBundle/Resources/config/routing/sales.yml"
+    prefix:   /sales
+
+kermesse_products:
+    resource: "@KermesseBundle/Resources/config/routing/products.yml"
+    prefix:   /products
+
+kermesse_events:
+    resource: "@KermesseBundle/Resources/config/routing/events.yml"
+    prefix:   /events

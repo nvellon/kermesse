@@ -1,0 +1,4 @@
+kermesse:
+    resource: "@KermesseBundle/Resources/config/routing.yml"
+    prefix:   /
+

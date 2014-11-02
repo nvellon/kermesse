@@ -1,0 +1,31 @@
+Kermesse\KermesseBundle\Entity\Events:
+    type: entity
+    table: events
+    id:
+        id:
+            type: bigint
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 80
+            fixed: false
+            comment: ''
+        dateStart:
+            type: datetime
+            nullable: false
+            comment: ''
+            default: CURRENT_TIMESTAMP
+            column: date_start
+        dateEnd:
+            type: datetime
+            nullable: true
+            comment: ''
+            column: date_end
+    lifecycleCallbacks: {  }

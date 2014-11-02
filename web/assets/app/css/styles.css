@@ -1,0 +1,25 @@
+body {
+	padding-top: 50px;
+}
+
+.app-datetime {
+
+}
+
+.app-datetime div {
+	display: inline;
+	padding-right: 5px;
+}
+
+.app-datetime select {
+	display: inline;
+	width: 80px;
+}
+
+.app-table-actions a {
+	margin-left: 20px;
+}
+
+table.records_list {
+
+}

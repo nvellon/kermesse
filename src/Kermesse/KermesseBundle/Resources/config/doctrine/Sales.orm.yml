@@ -1,0 +1,41 @@
+Kermesse\KermesseBundle\Entity\Sales:
+    type: entity
+    table: sales
+    indexes:
+        fk_ventas_eventos1_idx:
+            columns:
+                - event_id
+    id:
+        id:
+            type: bigint
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        dateCreated:
+            type: datetime
+            nullable: false
+            comment: ''
+            default: CURRENT_TIMESTAMP
+            column: date_created
+        priceTotal:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 4
+            comment: ''
+            column: price_total
+    manyToOne:
+        event:
+            targetEntity: Events
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                event_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

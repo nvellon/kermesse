@@ -1,0 +1,30 @@
+products:
+    path:     /
+    defaults: { _controller: "KermesseBundle:Products:index" }
+
+products_show:
+    path:     /{id}/show
+    defaults: { _controller: "KermesseBundle:Products:show" }
+
+products_new:
+    path:     /new
+    defaults: { _controller: "KermesseBundle:Products:new" }
+
+products_create:
+    path:     /create
+    defaults: { _controller: "KermesseBundle:Products:create" }
+    requirements: { _method: post }
+
+products_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KermesseBundle:Products:edit" }
+
+products_update:
+    path:     /{id}/update
+    defaults: { _controller: "KermesseBundle:Products:update" }
+    requirements: { _method: post|put }
+
+products_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KermesseBundle:Products:delete" }
+    requirements: { _method: post|delete }

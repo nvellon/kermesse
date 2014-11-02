@@ -1,0 +1,30 @@
+events:
+    path:     /
+    defaults: { _controller: "KermesseBundle:Events:index" }
+
+events_show:
+    path:     /{id}/show
+    defaults: { _controller: "KermesseBundle:Events:show" }
+
+events_new:
+    path:     /new
+    defaults: { _controller: "KermesseBundle:Events:new" }
+
+events_create:
+    path:     /create
+    defaults: { _controller: "KermesseBundle:Events:create" }
+    requirements: { _method: post }
+
+events_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KermesseBundle:Events:edit" }
+
+events_update:
+    path:     /{id}/update
+    defaults: { _controller: "KermesseBundle:Events:update" }
+    requirements: { _method: post|put }
+
+events_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KermesseBundle:Events:delete" }
+    requirements: { _method: post|delete }

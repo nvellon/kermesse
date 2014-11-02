@@ -1,0 +1,65 @@
+Kermesse\KermesseBundle\Entity\SalesLines:
+    type: entity
+    table: sales_lines
+    indexes:
+        fk_sales_lines_products1_idx:
+            columns:
+                - products_id
+        fk_sales_lines_sales1:
+            columns:
+                - sales_id
+    id:
+        id:
+            type: bigint
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        dateCreated:
+            type: datetime
+            nullable: false
+            comment: ''
+            default: CURRENT_TIMESTAMP
+            column: date_created
+        count:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+        priceUnit:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 4
+            comment: ''
+            column: price_unit
+        priceTotal:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 4
+            comment: ''
+            column: price_total
+    manyToOne:
+        sales:
+            targetEntity: Sales
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                sales_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        products:
+            targetEntity: Products
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                products_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
