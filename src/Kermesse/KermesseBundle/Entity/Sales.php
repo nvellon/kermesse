@@ -3,6 +3,7 @@
 namespace Kermesse\KermesseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Sales
@@ -38,19 +39,32 @@ class Sales
     /**
      * @var \Kermesse\KermesseBundle\Entity\Events
      *
-     * @ORM\ManyToOne(targetEntity="Kermesse\KermesseBundle\Entity\Events")
+     * @ORM\OneToOne(targetEntity="Kermesse\KermesseBundle\Entity\Events")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      * })
      */
     private $event;
 
+    /**
+     * @var \Kermesse\KermesseBundle\Entity\SalesLines
+     *
+     * @ORM\OneToMany(targetEntity="Kermesse\KermesseBundle\Entity\SalesLines", mappedBy="events")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id", referencedColumnName="sales_id")
+     * })
+     */
+    private $salesLines;
 
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -73,7 +87,7 @@ class Sales
     /**
      * Get dateCreated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateCreated()
     {
@@ -96,7 +110,7 @@ class Sales
     /**
      * Get priceTotal
      *
-     * @return string 
+     * @return string
      */
     public function getPriceTotal()
     {
@@ -119,10 +133,20 @@ class Sales
     /**
      * Get event
      *
-     * @return \Kermesse\KermesseBundle\Entity\Events 
+     * @return \Kermesse\KermesseBundle\Entity\Events
      */
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Get sale lines
+     *
+     * @return \Kermesse\KermesseBundle\Entity\SalesLines
+     */
+    public function getSalesLines()
+    {
+        return $this->salesLines;
     }
 }

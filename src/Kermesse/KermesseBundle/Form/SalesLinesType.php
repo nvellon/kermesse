@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SalesType extends AbstractType
+class SalesLinesType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,8 +16,11 @@ class SalesType extends AbstractType
     {
         $builder
             ->add('dateCreated')
+            ->add('count')
+            ->add('priceUnit')
             ->add('priceTotal')
-            ->add('event')
+            ->add('products')
+            ->add('sales')
         ;
     }
     
@@ -27,7 +30,7 @@ class SalesType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Kermesse\KermesseBundle\Entity\Sales'
+            'data_class' => 'Kermesse\KermesseBundle\Entity\SalesLines'
         ));
     }
 
@@ -36,6 +39,6 @@ class SalesType extends AbstractType
      */
     public function getName()
     {
-        return 'kermesse_kermessebundle_sales';
+        return 'kermesse_kermessebundle_saleslines';
     }
 }

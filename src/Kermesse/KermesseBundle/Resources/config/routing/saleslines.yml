@@ -1,0 +1,30 @@
+saleslines:
+    path:     /
+    defaults: { _controller: "KermesseBundle:SalesLines:index" }
+
+saleslines_show:
+    path:     /{id}/show
+    defaults: { _controller: "KermesseBundle:SalesLines:show" }
+
+saleslines_new:
+    path:     /new
+    defaults: { _controller: "KermesseBundle:SalesLines:new" }
+
+saleslines_create:
+    path:     /create
+    defaults: { _controller: "KermesseBundle:SalesLines:create" }
+    requirements: { _method: post }
+
+saleslines_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KermesseBundle:SalesLines:edit" }
+
+saleslines_update:
+    path:     /{id}/update
+    defaults: { _controller: "KermesseBundle:SalesLines:update" }
+    requirements: { _method: post|put }
+
+saleslines_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KermesseBundle:SalesLines:delete" }
+    requirements: { _method: post|delete }

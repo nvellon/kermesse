@@ -50,31 +50,31 @@ class SalesLines
     private $priceTotal;
 
     /**
-     * @var \Kermesse\KermesseBundle\Entity\Sales
-     *
-     * @ORM\ManyToOne(targetEntity="Kermesse\KermesseBundle\Entity\Sales")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sales_id", referencedColumnName="id")
-     * })
-     */
-    private $sales;
-
-    /**
      * @var \Kermesse\KermesseBundle\Entity\Products
      *
-     * @ORM\ManyToOne(targetEntity="Kermesse\KermesseBundle\Entity\Products")
+     * @ORM\OneToOne(targetEntity="Kermesse\KermesseBundle\Entity\Products")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="products_id", referencedColumnName="id")
      * })
      */
     private $products;
 
+    /**
+     * @var \Kermesse\KermesseBundle\Entity\Sales
+     *
+     * @ORM\ManyToOne(targetEntity="Kermesse\KermesseBundle\Entity\Sales", inversedBy="salesLines")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sales_id", referencedColumnName="id")
+     * })
+     */
+    private $sales;
+
 
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -97,7 +97,7 @@ class SalesLines
     /**
      * Get dateCreated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateCreated()
     {
@@ -120,7 +120,7 @@ class SalesLines
     /**
      * Get count
      *
-     * @return integer 
+     * @return integer
      */
     public function getCount()
     {
@@ -143,7 +143,7 @@ class SalesLines
     /**
      * Get priceUnit
      *
-     * @return string 
+     * @return string
      */
     public function getPriceUnit()
     {
@@ -166,34 +166,11 @@ class SalesLines
     /**
      * Get priceTotal
      *
-     * @return string 
+     * @return string
      */
     public function getPriceTotal()
     {
         return $this->priceTotal;
-    }
-
-    /**
-     * Set sales
-     *
-     * @param \Kermesse\KermesseBundle\Entity\Sales $sales
-     * @return SalesLines
-     */
-    public function setSales(\Kermesse\KermesseBundle\Entity\Sales $sales = null)
-    {
-        $this->sales = $sales;
-
-        return $this;
-    }
-
-    /**
-     * Get sales
-     *
-     * @return \Kermesse\KermesseBundle\Entity\Sales 
-     */
-    public function getSales()
-    {
-        return $this->sales;
     }
 
     /**
@@ -212,10 +189,33 @@ class SalesLines
     /**
      * Get products
      *
-     * @return \Kermesse\KermesseBundle\Entity\Products 
+     * @return \Kermesse\KermesseBundle\Entity\Products
      */
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * Set sales
+     *
+     * @param \Kermesse\KermesseBundle\Entity\Sales $sales
+     * @return SalesLines
+     */
+    public function setSales(\Kermesse\KermesseBundle\Entity\Sales $sales = null)
+    {
+        $this->sales = $sales;
+
+        return $this;
+    }
+
+    /**
+     * Get sales
+     *
+     * @return \Kermesse\KermesseBundle\Entity\Sales
+     */
+    public function getSales()
+    {
+        return $this->sales;
     }
 }

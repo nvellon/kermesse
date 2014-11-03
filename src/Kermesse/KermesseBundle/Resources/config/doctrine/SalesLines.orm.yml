@@ -44,15 +44,6 @@ Kermesse\KermesseBundle\Entity\SalesLines:
             comment: ''
             column: price_total
     manyToOne:
-        sales:
-            targetEntity: Sales
-            cascade: {  }
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                sales_id:
-                    referencedColumnName: id
-            orphanRemoval: false
         products:
             targetEntity: Products
             cascade: {  }
@@ -60,6 +51,15 @@ Kermesse\KermesseBundle\Entity\SalesLines:
             inversedBy: null
             joinColumns:
                 products_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        sales:
+            targetEntity: Sales
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                sales_id:
                     referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }
