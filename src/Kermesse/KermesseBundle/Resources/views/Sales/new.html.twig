@@ -1,15 +1,67 @@
 {% extends '::base.html.twig' %}
 
+{% form_theme form "KermesseBundle:Form:bootstrap_form.html.twig" %}
+
 {% block body -%}
-    <h1>Sales creation</h1>
+	<h1>Sales creation</h1>
 
-    {{ form(form) }}
+	{{ form_start(form) }}
+		{{ form_errors(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('sales') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+		<div>
+			{{ form_label(form.event) }}
+			{{ form_widget(form.event) }}
+		</div>
+
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Product</th>
+						<th>P. Unit</th>
+						<th>Count</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for salesLine in form.salesLines %}
+					<tr class="app-sale-line">
+						<td class="app-product">{{ form_widget(salesLine.products) }}</td>
+						<td class="app-punit">{{ form_widget(salesLine.priceUnit) }}</td>
+						<td class="app-count">
+							{{ form_widget(salesLine.count) }}
+							<i class="fa fa-minus-square" onclick="alert(1)"></i>
+							<i class="fa fa-plus-square" onclick="alert(1)"></i>
+						</td>
+						<td class="app-ptotal">{{ form_widget(salesLine.priceTotal) }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<div>
+			{{ form_label(form.priceTotal) }}
+			{{ form_widget(form.priceTotal) }}
+		</div>
+
+		<div>
+			{{ form_widget(form.submit) }}
+		</div>
+
+	{{ form_end(form) }}
+
+	<ul class="record_actions">
+		<li>
+			<a href="{{ path('sales') }}">
+				Back to the list
+			</a>
+		</li>
+	</ul>
+
+	<script type="text/javascript">
+	jQuery(document).ready(function() {
+
+	});
+	</script>
 {% endblock %}

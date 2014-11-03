@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kermesse\KermesseBundle\Entity\Sales;
 use Kermesse\KermesseBundle\Form\SalesType;
 
+use Kermesse\KermesseBundle\Entity\SalesLines;
+
 /**
  * Sales controller.
  *
@@ -39,12 +41,31 @@ class SalesController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if (true/*$form->isValid()*/) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
 
-            return $this->redirect($this->generateUrl('sales_show', array('id' => $entity->getId())));
+            $tktTpl = $this->getTicketTpl();
+
+            $allTkts = '';
+
+            $sales = $request->get('kermesse_kermessebundle_sales');
+            foreach ($sales['salesLines'] as $salesLine) {
+                if (!empty($salesLine['count']) && $salesLine['count'] > 0) {
+                    $product = $em->getRepository('KermesseBundle:Products')->find($salesLine['products']);
+
+                    $prodTkts = str_repeat($tktTpl, $salesLine['count']);
+                    $prodTkts = str_replace('{{product}}', $product->getName(), $prodTkts);
+
+                    $allTkts .= $prodTkts;
+                }
+            }
+
+            $this->convertToPdf($allTkts);
+
+            //$em->persist($entity);
+            //$em->flush();
+
+            //return $this->redirect($this->generateUrl('sales_show', array('id' => $entity->getId())));
         }
 
         return $this->render('KermesseBundle:Sales:new.html.twig', array(
@@ -78,7 +99,18 @@ class SalesController extends Controller
      */
     public function newAction()
     {
+        $em = $this->getDoctrine()->getManager();
+
         $entity = new Sales();
+
+        $products = $em->getRepository('KermesseBundle:Products')->findAll();
+        foreach ($products as $product) {
+            $sl = new SalesLines();
+            $sl->setProducts($product);
+            $sl->setPriceUnit($product->getPrice());
+            $entity->getSalesLines()->add($sl);
+        }
+
         $form   = $this->createCreateForm($entity);
 
         return $this->render('KermesseBundle:Sales:new.html.twig', array(
@@ -220,5 +252,42 @@ class SalesController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    private function getTicketTpl()
+    {
+        return '<page format="80x35" orientation="L">
+<table  style="width: 100%; height: 100%;">
+    <tr>
+        <td style="width: 100%; text-align: center; padding: 0 0 0 0; font-weight: bold; font-size: 14px;">- KERMESSE 2014 - </td>
+    </tr>
+    <tr>
+        <td style="width: 100%; text-align: center; padding: 10px 0 10px 0; font-weight: bold; font-size: 35px;">{{product}}</td>
+    </tr>
+    <tr>
+        <td style="width: 100%; text-align: center; padding: 0 0 15px 0; font-size: 14px;">Iglesia Anglicana San Salvador</td>
+    </tr>
+</table></page>';
+    }
+
+    private function convertToPdf($content)
+    {
+        // convert in PDF
+        try
+        {
+            $html2pdf = new \HTML2PDF('P', array(80, 35), 'es', true, 'UTF-8', array(0, 5, 0, 0));
+            $html2pdf->setDefaultFont('Helvetica');
+            $html2pdf->writeHTML($content);
+            //$html2pdf->Output(__DIR__.'/../../../../app/cache/exemple00.pdf', 'F');
+            $html2pdf->Output('exemple00.pdf');
+
+            //lp -d EPSON-TM-T20 -o media=Custom.72x35mm -o fit-to-page -o source=PageFeedCut ticket2.pdf
+
+            exit;
+        }
+        catch(\HTML2PDF_exception $e) {
+            echo $e;
+            exit;
+        }
     }
 }

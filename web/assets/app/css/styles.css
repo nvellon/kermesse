@@ -20,6 +20,15 @@ body {
 	margin-left: 20px;
 }
 
-table.records_list {
+tr.app-sale-line td.app-product select {
+	width: 200px;
+}
 
+tr.app-sale-line td.app-punit input,
+tr.app-sale-line td.app-ptotal input {
+	width: 100px;
+}
+
+tr.app-sale-line td.app-count input {
+	width: 50px;
 }

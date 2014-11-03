@@ -58,7 +58,7 @@ class Sales
 
     public function __construct()
     {
-        $this->tags = new ArrayCollection();
+        $this->salesLines = new ArrayCollection();
     }
 
     /**
@@ -143,7 +143,7 @@ class Sales
     /**
      * Get sale lines
      *
-     * @return \Kermesse\KermesseBundle\Entity\SalesLines
+     * @return Doctrine\Common\Collections\ArrayCollection
      */
     public function getSalesLines()
     {
