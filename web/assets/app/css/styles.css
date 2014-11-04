@@ -32,3 +32,19 @@ tr.app-sale-line td.app-ptotal input {
 tr.app-sale-line td.app-count input {
 	width: 50px;
 }
+
+tr.app-sale-line td.app-count i {
+	font-size: 20px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+div.app-priceTotal {
+	margin-bottom: 30px;
+}
+
+div.app-priceTotal label,
+div.app-priceTotal input {
+	font-size: 20px;
+	margin-right: 10px;
+}

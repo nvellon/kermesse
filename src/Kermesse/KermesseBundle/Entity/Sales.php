@@ -49,7 +49,7 @@ class Sales
     /**
      * @var \Kermesse\KermesseBundle\Entity\SalesLines
      *
-     * @ORM\OneToMany(targetEntity="Kermesse\KermesseBundle\Entity\SalesLines", mappedBy="events")
+     * @ORM\OneToMany(targetEntity="Kermesse\KermesseBundle\Entity\SalesLines", mappedBy="sales", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id", referencedColumnName="sales_id")
      * })

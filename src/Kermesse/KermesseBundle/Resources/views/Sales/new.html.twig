@@ -30,8 +30,8 @@
 						<td class="app-punit">{{ form_widget(salesLine.priceUnit) }}</td>
 						<td class="app-count">
 							{{ form_widget(salesLine.count) }}
-							<i class="fa fa-minus-square" onclick="alert(1)"></i>
-							<i class="fa fa-plus-square" onclick="alert(1)"></i>
+							<i class="fa fa-minus-square" onclick="Sale.minus(0)"></i>
+							<i class="fa fa-plus-square" onclick="Sale.plus(0)"></i>
 						</td>
 						<td class="app-ptotal">{{ form_widget(salesLine.priceTotal) }}</td>
 					</tr>
@@ -40,12 +40,9 @@
 			</table>
 		</div>
 
-		<div>
+		<div class="app-priceTotal">
 			{{ form_label(form.priceTotal) }}
 			{{ form_widget(form.priceTotal) }}
-		</div>
-
-		<div>
 			{{ form_widget(form.submit) }}
 		</div>
 
@@ -58,10 +55,4 @@
 			</a>
 		</li>
 	</ul>
-
-	<script type="text/javascript">
-	jQuery(document).ready(function() {
-
-	});
-	</script>
 {% endblock %}

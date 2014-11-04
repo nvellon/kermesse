@@ -47,6 +47,7 @@ class SalesController extends Controller
             $tktTpl = $this->getTicketTpl();
 
             $allTkts = '';
+            $total = 0;
 
             $sales = $request->get('kermesse_kermessebundle_sales');
             foreach ($sales['salesLines'] as $salesLine) {
@@ -57,14 +58,34 @@ class SalesController extends Controller
                     $prodTkts = str_replace('{{product}}', $product->getName(), $prodTkts);
 
                     $allTkts .= $prodTkts;
+
+                    $subTotal = $salesLine['count'] * $product->getPrice();
+
+                    $sl = new SalesLines();
+                    $sl->setSales($entity);
+                    $sl->setProducts($product);
+                    $sl->setPriceUnit($product->getPrice());
+                    $sl->setCount($salesLine['count']);
+                    $sl->setPriceTotal($subTotal);
+
+                    $entity->getSalesLines()->add($sl);
+
+                    $total += $subTotal;
+
+                    $em->persist($sl);
                 }
             }
 
-            $this->convertToPdf($allTkts);
+            $entity->setPriceTotal($total);
+            $entity->setDateCreated(new \DateTime());
 
-            //$em->persist($entity);
-            //$em->flush();
+            $file = $this->convertToPdf($allTkts);
+            $this->sendToPrinter($file);
 
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('sales_new'));
             //return $this->redirect($this->generateUrl('sales_show', array('id' => $entity->getId())));
         }
 
@@ -88,7 +109,7 @@ class SalesController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Save & Print'));
 
         return $form;
     }
@@ -102,12 +123,15 @@ class SalesController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = new Sales();
+        $entity->setPriceTotal(0);
 
         $products = $em->getRepository('KermesseBundle:Products')->findAll();
         foreach ($products as $product) {
             $sl = new SalesLines();
             $sl->setProducts($product);
             $sl->setPriceUnit($product->getPrice());
+            $sl->setCount(0);
+            $sl->setPriceTotal(0);
             $entity->getSalesLines()->add($sl);
         }
 
@@ -272,22 +296,25 @@ class SalesController extends Controller
 
     private function convertToPdf($content)
     {
-        // convert in PDF
         try
         {
+            $fileName = '/tmp/'.uniqid ('ticket_', true).'.pdf';
             $html2pdf = new \HTML2PDF('P', array(80, 35), 'es', true, 'UTF-8', array(0, 5, 0, 0));
             $html2pdf->setDefaultFont('Helvetica');
             $html2pdf->writeHTML($content);
-            //$html2pdf->Output(__DIR__.'/../../../../app/cache/exemple00.pdf', 'F');
-            $html2pdf->Output('exemple00.pdf');
+            $html2pdf->Output($fileName, 'F');
+            //$html2pdf->Output('exemple00.pdf');
 
-            //lp -d EPSON-TM-T20 -o media=Custom.72x35mm -o fit-to-page -o source=PageFeedCut ticket2.pdf
-
-            exit;
+            return $fileName;
         }
         catch(\HTML2PDF_exception $e) {
             echo $e;
             exit;
         }
+    }
+
+    private function sendToPrinter($file)
+    {
+        exec('lp -d EPSON-TM-T20 -o media=Custom.72x35mm -o fit-to-page -o source=PageFeedCut '.$file);
     }
 }
