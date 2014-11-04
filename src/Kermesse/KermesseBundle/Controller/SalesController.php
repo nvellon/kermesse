@@ -55,7 +55,7 @@ class SalesController extends Controller
                     $product = $em->getRepository('KermesseBundle:Products')->find($salesLine['products']);
 
                     $prodTkts = str_repeat($tktTpl, $salesLine['count']);
-                    $prodTkts = str_replace('{{product}}', $product->getName(), $prodTkts);
+                    $prodTkts = str_replace('{{product}}', strtoupper($product->getName()), $prodTkts);
 
                     $allTkts .= $prodTkts;
 
@@ -286,7 +286,7 @@ class SalesController extends Controller
         <td style="width: 100%; text-align: center; padding: 0 0 0 0; font-weight: bold; font-size: 14px;">- KERMESSE 2014 - </td>
     </tr>
     <tr>
-        <td style="width: 100%; text-align: center; padding: 10px 0 10px 0; font-weight: bold; font-size: 35px;">{{product}}</td>
+        <td style="width: 100%; text-align: center; padding: 10px 0 10px 0; font-weight: bold; font-size: 30px;">{{product}}</td>
     </tr>
     <tr>
         <td style="width: 100%; text-align: center; padding: 0 0 15px 0; font-size: 14px;">Iglesia Anglicana San Salvador</td>

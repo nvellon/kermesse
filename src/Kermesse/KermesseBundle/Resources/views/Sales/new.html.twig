@@ -3,14 +3,14 @@
 {% form_theme form "KermesseBundle:Form:bootstrap_form.html.twig" %}
 
 {% block body -%}
-	<h1>Sales creation</h1>
 
 	{{ form_start(form) }}
 		{{ form_errors(form) }}
 
-		<div>
-			{{ form_label(form.event) }}
-			{{ form_widget(form.event) }}
+		<div class="app-priceTotal">
+			{{ form_label(form.priceTotal) }}
+			{{ form_widget(form.priceTotal) }}
+			{{ form_widget(form.submit) }}
 		</div>
 
 		<div>
@@ -18,8 +18,8 @@
 				<thead>
 					<tr>
 						<th>Product</th>
-						<th>P. Unit</th>
 						<th>Count</th>
+						<th>P. Unit</th>
 						<th>Total</th>
 					</tr>
 				</thead>
@@ -27,12 +27,12 @@
 					{% for salesLine in form.salesLines %}
 					<tr class="app-sale-line">
 						<td class="app-product">{{ form_widget(salesLine.products) }}</td>
-						<td class="app-punit">{{ form_widget(salesLine.priceUnit) }}</td>
 						<td class="app-count">
 							{{ form_widget(salesLine.count) }}
 							<i class="fa fa-minus-square" onclick="Sale.minus(0)"></i>
 							<i class="fa fa-plus-square" onclick="Sale.plus(0)"></i>
 						</td>
+						<td class="app-punit">{{ form_widget(salesLine.priceUnit) }}</td>
 						<td class="app-ptotal">{{ form_widget(salesLine.priceTotal) }}</td>
 					</tr>
 					{% endfor %}
@@ -40,10 +40,9 @@
 			</table>
 		</div>
 
-		<div class="app-priceTotal">
-			{{ form_label(form.priceTotal) }}
-			{{ form_widget(form.priceTotal) }}
-			{{ form_widget(form.submit) }}
+		<div>
+			{{ form_label(form.event) }}
+			{{ form_widget(form.event) }}
 		</div>
 
 	{{ form_end(form) }}

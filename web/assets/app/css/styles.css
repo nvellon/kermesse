@@ -29,22 +29,33 @@ tr.app-sale-line td.app-ptotal input {
 	width: 100px;
 }
 
+tr.app-sale-line td {
+	margin: 0px !important;
+	padding: 0px !important;
+	vertical-align: middle !important;
+}
+
 tr.app-sale-line td.app-count input {
 	width: 50px;
 }
 
 tr.app-sale-line td.app-count i {
-	font-size: 20px;
-	margin-left: 10px;
+	font-size: 40px;
+	margin-left: 20px;
 	cursor: pointer;
 }
 
 div.app-priceTotal {
-	margin-bottom: 30px;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 div.app-priceTotal label,
 div.app-priceTotal input {
 	font-size: 20px;
 	margin-right: 10px;
+}
+
+button#kermesse_kermessebundle_sales_submit {
+	font-size: 35px;
 }
