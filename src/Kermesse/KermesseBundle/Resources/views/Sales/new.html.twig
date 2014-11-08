@@ -29,8 +29,8 @@
 						<td class="app-product">{{ form_widget(salesLine.products) }}</td>
 						<td class="app-count">
 							{{ form_widget(salesLine.count) }}
-							<i class="fa fa-minus-square" onclick="Sale.minus(0)"></i>
-							<i class="fa fa-plus-square" onclick="Sale.plus(0)"></i>
+							<i class="fa fa-minus-square" onclick="Sale.minus(this)"></i>
+							<i class="fa fa-plus-square" onclick="Sale.plus(this)"></i>
 						</td>
 						<td class="app-punit">{{ form_widget(salesLine.priceUnit) }}</td>
 						<td class="app-ptotal">{{ form_widget(salesLine.priceTotal) }}</td>

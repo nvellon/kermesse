@@ -76,6 +76,10 @@ class SalesController extends Controller
                 }
             }
 
+            $ip = explode('.', $request->server->get('REMOTE_ADDR'));
+
+            $allTkts = str_replace('{{terminal}}', $ip[3], $allTkts);
+
             $entity->setPriceTotal($total);
             $entity->setDateCreated(new \DateTime());
 
@@ -289,7 +293,7 @@ class SalesController extends Controller
         <td style="width: 100%; text-align: center; padding: 10px 0 10px 0; font-weight: bold; font-size: 30px;">{{product}}</td>
     </tr>
     <tr>
-        <td style="width: 100%; text-align: center; padding: 0 0 15px 0; font-size: 14px;">Iglesia Anglicana San Salvador</td>
+        <td style="width: 100%; text-align: center; padding: 0 0 10px 0; font-size: 14px;">Iglesia Anglicana San Salvador<br><span style="font-size: 8px;">{{terminal}}</span></td>
     </tr>
 </table></page>';
     }

@@ -1,12 +1,30 @@
 var Sale = {
 	fieldPrefix: 'kermesse_kermessebundle_sales_salesLines_',
 
-	minus: function (row) {
-		alert(row);
+	changeCount: function (o, val) {
+		var container = $(o.parentNode);
+
+		var countInput = container.find("[id^='kermesse_kermessebundle_sales_salesLines_'][id$='_count']");;
+
+		var count = parseInt(countInput.val());
+
+		if ((val < 0 && count > 0) || val > 0) {
+			countInput.val(count + val);
+
+			countInput.trigger('change');
+		}
 	},
 
-	plus: function (row) {
-		alert(row);
+	minus: function (o) {
+		var me = Sale;
+
+		me.changeCount(o, -1);
+	},
+
+	plus: function (o) {
+		var me = Sale;
+
+		me.changeCount(o, 1);
 	},
 
 	update: function () {
@@ -40,4 +58,14 @@ var Sale = {
 
 $( document ).ready(function () {
 	$("[id^='kermesse_kermessebundle_sales_salesLines_'][id$='_count']").on( "change", {}, Sale.update );
+
+	$("[name='kermesse_kermessebundle_sales']").on ('submit', function (event) {
+		var total = parseFloat($('#kermesse_kermessebundle_sales_priceTotal').val());
+		if (total > 0.0) {
+			$("kermesse_kermessebundle_sales_submit").html('Wait...');
+			$("kermesse_kermessebundle_sales_submit").disabled(true);
+		} else {
+			event.preventDefault();
+		}
+	})
 });
