@@ -1,0 +1,3 @@
+letters:
+    path:     /
+    defaults: { _controller: "KermesseBundle:Letters:index" }

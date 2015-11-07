@@ -131,12 +131,14 @@ class SalesController extends Controller
 
         $products = $em->getRepository('KermesseBundle:Products')->findAll();
         foreach ($products as $product) {
-            $sl = new SalesLines();
-            $sl->setProducts($product);
-            $sl->setPriceUnit($product->getPrice());
-            $sl->setCount(0);
-            $sl->setPriceTotal(0);
-            $entity->getSalesLines()->add($sl);
+            if ($product->getPrice() != 0) {
+                $sl = new SalesLines();
+                $sl->setProducts($product);
+                $sl->setPriceUnit($product->getPrice());
+                $sl->setCount(0);
+                $sl->setPriceTotal(0);
+                $entity->getSalesLines()->add($sl);
+            }
         }
 
         $form   = $this->createCreateForm($entity);
@@ -287,7 +289,7 @@ class SalesController extends Controller
         return '<page format="80x35" orientation="L">
 <table  style="width: 100%; height: 100%;">
     <tr>
-        <td style="width: 100%; text-align: center; padding: 0 0 0 0; font-weight: bold; font-size: 14px;">- KERMESSE 2014 - </td>
+        <td style="width: 100%; text-align: center; padding: 0 0 0 0; font-weight: bold; font-size: 14px;">- KERMESSE 2015 - </td>
     </tr>
     <tr>
         <td style="width: 100%; text-align: center; padding: 10px 0 10px 0; font-weight: bold; font-size: 30px;">{{product}}</td>

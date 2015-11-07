@@ -13,3 +13,7 @@ kermesse_products:
 kermesse_events:
     resource: "@KermesseBundle/Resources/config/routing/events.yml"
     prefix:   /events
+
+kermesse_letters:
+    resource: "@KermesseBundle/Resources/config/routing/letters.yml"
+    prefix:   /letters
